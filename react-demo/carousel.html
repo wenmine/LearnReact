@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<title>CSS3动画</title>
+	<style type="text/css">
+	*{margin:0;padding:0;}
+		html,body{
+			width: 100%;
+			height: 100%;
+		}
+		.container{
+			position: relative;
+			width: 100%;
+			height: 60%;
+			overflow: hidden;
+		}
+		.example-enter{
+			opacity: 0.01;
+			transition: opacity 0.5s ease-in;
+		}
+		.example-enter.example-enter-active{
+			opacity: 1;
+		}
+		.example-leave{
+			opacity: 1;
+			transition: opacity 0.5s ease-in;
+		}
+		.example-leave.example-leave-active{
+			opacity: 0.01;
+		}
+		.img{
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+		}
+		.carousel{
+			position: relative;
+			width: 100%;
+			height: 100%;
+		}
+		.carousel1-enter {
+		    left: 0;
+		}
+		.carousel1-enter-active {
+		    left: 100%;
+		    transition: left 300ms ease-in;
+		}
+		.carousel1-leave {
+		    left: -100%;
+		}
+		.carousel1-leave-active {
+		    left: 0;
+		    transition: left 300ms ease-in;
+		}
+		.carousel2-enter {
+		    left: 100%;
+		}
+		.carousel2-enter-active {
+		    left: 0;
+		    transition: left 300ms ease-in;
+		}
+		.carousel2-leave {
+		    left: 0;
+		}
+		.carousel2-leave-active {
+		    left: -100%;
+		    transition: left 300ms ease-in;
+		}
+		.content{
+			position: relative;
+			width: 100%;
+			height: 100%;
+		}
+		.bullets{
+			position: absolute;
+			bottom: 10px;
+			left: 0;
+			width: 100%;
+			height: 16px;
+		    text-align: center;
+		    -webkit-transition: .3s;
+		    -moz-transition: .3s;
+		    -o-transition: .3s;
+		    transition: .3s;
+		    -webkit-transform: translate3d(0,0,0);
+		    -ms-transform: translate3d(0,0,0);
+		    -o-transform: translate3d(0,0,0);
+		    transform: translate3d(0,0,0);
+		    z-index: 10;
+
+		}
+		.bullets .circle{
+			margin: 0 5px;
+			width: 8px;
+		    height: 8px;
+		    display: inline-block;
+		    border-radius: 100%;
+		    background: #000;
+		    opacity: .2;
+			cursor: pointer;
+		}
+		.bullets .active{
+			background-color: #2196F3;
+			opacity: 1;
+		}
+		.turnBtn{
+			position: absolute;
+			top: 45%;
+			margin-top : -15px;
+			width : 30px;
+			height: 30px;
+			border-top: 2px solid #2196F3;
+			border-left: 2px solid #2196F3;
+			cursor: pointer;
+		}
+		.prev{
+			left: 5%;
+			transform: rotate(-45deg);
+		}
+	.next{
+		right: 5%;
+		transform: rotate(135deg);
+	}
+		@media screen and (max-height: 768px){
+			.container{height: 30%;}
+		}
+	</style>
+</head>
+<body>
+	<div id="container" class="container"></div>
+	<script src="http://cdn.bootcss.com/react/15.3.2/react-with-addons.min.js"></script>
+	<script src="http://cdn.bootcss.com/react/15.3.2/react-dom.min.js"></script>
+	<script src="./browser.min.js"></script>	
+	<script type="text/babel">
+		var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+		var Carousel = React.createClass({
+			propTypes:{
+				transitionName: React.PropTypes.string.isRequired,
+				imageSrc: React.PropTypes.string.isRequired
+			},
+			render:function(){
+				return(
+					<div className='carousel'>
+						<ReactCSSTransitionGroup transitionName={this.props.transitionName} transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+						<img src={this.props.imageSrc} key={this.props.imageSrc} className="img" />
+						</ReactCSSTransitionGroup>
+					</div>
+				);	
+			}
+		});
+		var CarouselContainer = React.createClass({
+			getInitialState:function(){
+				var isloop= this.props.autoplay ? true : this.props.isLoop;
+				return{
+					imageSrcs : this.props.sildes,
+					isLoop : isloop,
+					autoPlay : this.props.autoplay,
+					currentIndex :  0,
+					transitionName : "carousel2"
+				}
+			},
+			componentDidMount : function () {
+				if (this.timer){
+					clearInterval(this.timer);
+					this.timer = null;
+				}
+				if (this.state.autoPlay){
+					this.timer = setInterval(function () {
+						this.handleNext();
+					}.bind(this),8000);
+				}
+			},
+			handleAutoPlay : function () {
+				if (this.timer){
+					clearInterval(this.timer);
+					this.timer = null;
+				}
+				if (this.state.autoPlay){
+					this.timer = setInterval(function () {
+						this.handleNext();
+					}.bind(this),8000);
+				}
+			},
+			handlePrev : function(){
+			var curIndex = this.state.currentIndex;
+				if(curIndex <= 0){
+					curIndex = this.state.isLoop ? this.state.imageSrcs.length : 1;
+				};
+				this.setState({
+					transitionName : "carousel1",
+					currentIndex : --curIndex
+				});
+				this.handleAutoPlay();
+
+			},
+			handleNext : function(){
+				var curIndex = this.state.currentIndex;
+				if(curIndex >= this.state.imageSrcs.length-1){
+					curIndex = this.state.isLoop ? -1 :this.state.imageSrcs.length-2 ;
+				};
+				this.setState({
+				transitionName : "carousel2",
+					currentIndex : ++curIndex
+				});
+				this.handleAutoPlay();
+			},
+			handleBullet : function(i){
+				var curIndex = this.state.currentIndex;
+				var tsName = i >= curIndex ? "carousel2" : "carousel1";
+				this.setState({
+				transitionName : tsName,
+					currentIndex : i
+				});
+				this.handleAutoPlay();
+			},
+			render:function(){
+				var index = this.state.currentIndex,imgSrcs = this.state.imageSrcs,bullets=null;
+				bullets = imgSrcs.map(function(item,i){
+					var isActive = index==i ? "circle active" : "circle";
+						return(
+							<span className={isActive} onClick={this.handleBullet.bind(this,i)}></span>
+						)
+					}.bind(this));
+				return (
+					<div className = "content">
+						<Carousel transitionName = {this.state.transitionName} imageSrc = {imgSrcs[index]}></Carousel>
+						<div onClick = {this.handlePrev} className="turnBtn prev"></div>
+						<div onClick = {this.handleNext} className="turnBtn next"></div>
+						<div className = "bullets">
+							{bullets}
+						</div>
+					</div>
+				);
+			}
+		});
+		var sildes =["./images/1.jpeg","./images/2.jpeg","./images/3.jpg","./images/6.jpg"];
+		ReactDOM.render(<CarouselContainer sildes={sildes} isLoop = {true} autoplay = {true}></CarouselContainer>,document.getElementById('container'));
+	</script>
+</body>
+</html>

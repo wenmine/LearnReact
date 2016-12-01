@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CSS3动画</title>
+	<style type="text/css">
+		.example-enter{
+			opacity: 0.01;
+			transition: opacity 0.5s ease-in;
+		}
+		.example-enter.example-enter-active{
+			opacity: 1;
+		}
+		.example-leave{
+			opacity: 1;
+			transition: opacity 0.5s ease-in;
+		}
+		.example-leave.example-leave-active{
+			opacity: 0.01;
+		}
+	</style>
+</head>
+<body>
+	<div id="container"></div>
+	<script src="http://cdn.bootcss.com/react/15.3.2/react-with-addons.min.js"></script>
+	<script src="http://cdn.bootcss.com/react/15.3.2/react-dom.min.js"></script>
+	<script src="./browser.min.js"></script>	
+	<script type="text/babel">
+		var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+		var TodoList = React.createClass({
+			getInitialState:function(){
+				return {
+					items : ['hello','world','click','me']
+				};
+			},
+			handleAdd:function(){
+				var newItems = this.state.items.concat([prompt("输入你所要添加的内容！")]);
+				this.setState({
+					items : newItems
+				})
+			},
+			handleRemove:function(i){
+				var newItems = this.state.items;
+				newItems.splice(i,1);
+				this.setState({
+					items : newItems
+				})
+			},
+			render:function(){
+				var items = this.state.items.map(function(item,i) {
+					return (
+							<div key={item} onClick={this.handleRemove.bind(this,i)}>
+								{item}
+							</div>
+					);
+				}.bind(this)); //如果这里不写bind(this)的话，这个map里面的this
+				return(
+					<div>
+						<button onClick={this.handleAdd}>Add item</button>
+						<ReactCSSTransitionGroup transitionName= "example" >
+							{items}
+						</ReactCSSTransitionGroup>
+					</div>
+				);
+			}
+		});
+		ReactDOM.render(<TodoList></TodoList>,document.getElementById('container'));
+	</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo2</title>
+    <script src="http://cdn.bootcss.com/react/15.1.0/react.min.js"></script>
+    <script src="http://cdn.bootcss.com/react/15.1.0/react-dom.min.js"></script>
+    <script src="./browser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/babel">
+    var names = ["lily","tom","john"];
+    ReactDOM.render(
+            <div>
+                {
+                    names.map(function(name){
+                        return <h1>hello {name}</h1>
+                    })
+                }
+            </div>,
+            document.getElementById("container")
+    );
+</script>
+</body>
+</html>

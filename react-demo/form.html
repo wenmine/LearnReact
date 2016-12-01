@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://cdn.bootcss.com/react/15.1.0/react.min.js"></script>
+	<script src="http://cdn.bootcss.com/react/15.1.0/react-dom.min.js"></script>
+	<script src="./browser.min.js"></script>
+</head>
+<body>
+	<div id="container"></div>
+	<script type="text/babel">
+
+		var Comment = React.createClass({
+			getInitialState: function () {
+				return {
+					username : "",
+					sex : "man",
+					 checked : true
+				}
+			},
+			handleChange: function(event){
+				this.setState({
+					username : event.target.value
+				});
+			},
+			handleSelect: function(event){
+				this.setState({
+					sex : event.target.value
+				});
+			},
+			handleCheck: function(event){
+				this.setState({
+					checked : event.target.checked
+				});
+			},
+			submitHandle: function(event){
+				event.preventDefault();
+				console.log(this.state);
+			},
+			render:function () {
+				console.log(this.state);
+				return <form onSubmit={this.submitHandle}>
+							<label htmlFor="username">请输入用户名：</label>
+							<input id="username" type="text" value={this.state.username} onChange={this.handleChange} />
+							<select onChange={this.handleSelect} value={this.state.sex}>
+								<option value="man">男</option>
+								<option value="woman">女</option>
+							</select>
+							<label htmlFor="checkbox">同意用户协议</label>
+							<input id="checkbox" type="checkbox" value="agree" onChange={this.handleCheck}  checked={this.state.checked} />
+							<button type="submit">提交</button>
+						</form>;
+			}
+		});
+
+		var BindExample = React.createClass({
+			getInitialState: function () {
+				return {
+					username : "",
+					sex : "man",
+					checked : true
+				}
+			},
+			handleChange: function(key,event){
+				var temp = {};
+				temp[key] = key == "checked"?event.target.checked :event.target.value;
+				this.setState(temp);
+			},//注：为什么要新声明一个对象，然后将值赋给对象最后再将对象设置在state里：因为如果直接用 this.setState({key:xxx}),这样这个key只是一个简单的字符串"key"，而不会将他当做是变量，取变量值。
+				// 只有通过新声明一个对象的方式才能取其变量值。
+			submitHandle: function(event){
+				event.preventDefault();
+				console.log(this.state);
+			},
+			render:function () {
+				console.log(this.state);
+				return <form onSubmit={this.submitHandle}>
+					<label htmlFor="username1">请输入用户名：</label>
+					<input id="username1" type="text" value={this.state.username} onChange={this.handleChange.bind(this,"username")} />
+					<select onChange={this.handleChange.bind(this,"sex")} value={this.state.sex}>
+						<option value="man">男</option>
+						<option value="woman">女</option>
+					</select>
+					<label htmlFor="checkbox1">同意用户协议</label>
+					<input id="checkbox1" type="checkbox" value="agree" onChange={this.handleChange.bind(this,"checked")}  checked={this.state.checked} />
+					<button type="submit">提交</button>
+				</form>;
+			}
+		});
+
+		var NameExample = React.createClass({
+			getInitialState: function () {
+				return {
+					username : "",
+					sex : "man",
+					checked : true
+				}
+			},
+			handleChange: function(event){
+				var temp = {};
+				temp[event.target.name] = event.target.name == "checked"?event.target.checked :event.target.value;
+				this.setState(temp);
+			},//注：为什么要新声明一个对象，然后将值赋给对象最后再将对象设置在state里：因为如果直接用 this.setState({key:xxx}),这样这个key只是一个简单的字符串"key"，而不会将他当做是变量，取变量值。
+			// 只有通过新声明一个对象的方式才能取其变量值。
+			submitHandle: function(event){
+				event.preventDefault();
+				console.log(this.state);
+			},
+			render:function () {
+				console.log(this.state);
+				return <form onSubmit={this.submitHandle}>
+					<label htmlFor="username2">请输入用户名：</label>
+					<input id="username2" name="username" type="text" value={this.state.username} onChange={this.handleChange} />
+					<select onChange={this.handleChange} value={this.state.sex} name="sex">
+						<option value="man">男</option>
+						<option value="woman">女</option>
+					</select>
+					<label htmlFor="checkbox2">同意用户协议</label>
+					<input id="checkbox2" type="checkbox" value="agree"  name="checked"  onChange={this.handleChange}  checked={this.state.checked} />
+					<button type="submit">提交</button>
+				</form>;
+			}
+		});
+		ReactDOM.render(<NameExample></NameExample>,document.getElementById('container'));
+	</script>
+</body>
+</html>

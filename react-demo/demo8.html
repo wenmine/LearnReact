@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo8</title>
+    <script src="http://cdn.bootcss.com/react/15.1.0/react.min.js"></script>
+    <script src="http://cdn.bootcss.com/react/15.1.0/react-dom.min.js"></script>
+    <script src="./browser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/babel">
+    var StateComponent = React.createClass({
+        getInitialState : function () {
+            return {
+                islike : "like"
+            }
+        },
+        handleClick : function () {
+            var tempLike = this.state.islike === "like"?"not like" :"like";
+            this.setState({
+                islike : tempLike
+            })
+        },
+        render : function () {
+            return (
+                    <div>
+                        <p>状态值为：{this.state.islike}</p>
+                        <button onClick={this.handleClick}>点击改变状态值</button>
+                    </div>
+            );
+        }
+    });
+    var data = 123;
+    ReactDOM.render(
+            <StateComponent></StateComponent>,
+            document.getElementById("container")
+    );
+</script>
+</body>
+</html>

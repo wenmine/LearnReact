@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo7</title>
+    <script src="http://cdn.bootcss.com/react/15.1.0/react.min.js"></script>
+    <script src="http://cdn.bootcss.com/react/15.1.0/react-dom.min.js"></script>
+    <script src="./browser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/babel">
+    var RefComponent = React.createClass({
+        handleClick : function () {
+            this.refs.myInput.focus();
+        },
+        render : function () {
+            return <div>
+                        <input type="text" ref="myInput"/>
+                        <button onClick={this.handleClick}>点击使输入框获取焦点</button>
+                    </div>;
+        }
+    });
+    var data = 123;
+    ReactDOM.render(
+            <RefComponent></RefComponent>,
+            document.getElementById("container")
+    );
+</script>
+</body>
+</html>

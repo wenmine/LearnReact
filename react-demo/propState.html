@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://cdn.bootcss.com/react/15.1.0/react.min.js"></script>
+	<script src="http://cdn.bootcss.com/react/15.1.0/react-dom.min.js"></script>
+	<script src="./browser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+	<script type="text/babel">
+		var Content = React.createClass({
+			getInitialState:function () {
+				return {
+					inputContent: ""
+				};
+			},
+			changeInput:function (event) {
+				this.setState({
+					inputContent:event.target.value
+				});
+			},
+			clickSubmit:function () {
+				console.log("repay to:"+this.props.selectName+"\n"+this.state.inputContent);
+			},
+			render:function () {
+				return <div>
+							<textarea placeholder="请输入评论内容" onChange={this.changeInput}></textarea>
+							<button onClick={this.clickSubmit}>提交</button>
+						</div> ;
+			}
+		});
+		var Comment = React.createClass({
+			getInitialState:function () {
+				return {
+					names:["wang","ben","Tim"],
+					selectName:""
+				}
+			},
+			handleSelect: function(event){
+				console.log(event.target);
+				console.log(event);
+				this.setState({
+				selectName : event.target.value
+				});
+			},
+			render:function () {
+				var options = [];
+				for(var option in this.state.names){
+					options.push(<option value={this.state.names[option]}>{this.state.names[option]}</option> );
+				};
+				return <div>
+							<select onChange={this.handleSelect}>
+								<option value=""></option>
+								{options}
+							</select>
+							<Content selectName={this.state.selectName}></Content>
+						</div>;
+			}
+		});
+		ReactDOM.render(<Comment></Comment>,document.getElementById('container'));
+	</script>
+</body>
+</html>

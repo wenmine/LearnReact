@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo9</title>
+    <script src="http://cdn.bootcss.com/react/15.1.0/react.min.js"></script>
+    <script src="http://cdn.bootcss.com/react/15.1.0/react-dom.min.js"></script>
+    <script src="./browser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/babel">
+    var FormComponent = React.createClass({
+        getInitialState : function () {
+            return {
+                value : "hello"
+            }
+        },
+        handleChange : function (event) {
+            this.setState({
+                value : event.target.value
+            });
+        },
+        render : function () {
+            var value = this.state.value;
+            return (
+                    <div>
+                       <input type="text" value={value} onChange = {this.handleChange}/>
+                        <p>{value}</p>
+                    </div>
+            );
+        }
+    });
+    var data = 123;
+    ReactDOM.render(
+            <FormComponent></FormComponent>,
+            document.getElementById("container")
+    );
+</script>
+</body>
+</html>

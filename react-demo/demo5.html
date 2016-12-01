@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo5</title>
+    <script src="http://cdn.bootcss.com/react/15.1.0/react.min.js"></script>
+    <script src="http://cdn.bootcss.com/react/15.1.0/react-dom.min.js"></script>
+    <script src="./browser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/babel">
+    var ListComponent = React.createClass({
+        render : function () {
+            return <ol>
+                        {
+                            React.Children.map(this.props.children,function(child){
+                                return <li>{child}</li>
+                            })
+                        }
+                    </ol>
+        }
+    });
+    ReactDOM.render(
+            <ListComponent >
+                <span>Hello World</span>
+                <span>Hello React</span>
+            </ListComponent>,
+            document.getElementById("container")
+    );
+</script>
+</body>
+</html>

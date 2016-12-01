@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo6</title>
+    <script src="http://cdn.bootcss.com/react/15.1.0/react.min.js"></script>
+    <script src="http://cdn.bootcss.com/react/15.1.0/react-dom.min.js"></script>
+    <script src="./browser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/babel">
+    var PropComponent = React.createClass({
+        propTypes:{
+            name: React.PropTypes.string.isRequired
+        },
+//        getDefaultProps : function () {
+//            return{
+//                name :123
+//            }
+//        },
+        render : function () {
+            return <h1>Hello {this.props.name}</h1>;
+        }
+    });
+    var data = 123;
+    ReactDOM.render(
+            <PropComponent name={data}></PropComponent>,
+            document.getElementById("container")
+    );
+</script>
+</body>
+</html>
