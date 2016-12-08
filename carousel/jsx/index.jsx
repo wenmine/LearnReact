@@ -21,6 +21,6 @@ var slides =[
     //speed为切换速度，delay为轮播速度
     //mousepause简单设置为如果鼠标停留在区域内则会暂停轮播，当进行按钮点击操作切换图片时，则又会启动轮播。
 ReactDOM.render(
-			<Slide slides = {slides} speed={300} delay={8000} arrow = {true} bullet = {true} mousepause = {true} isLoop = {true} autoplay = {true}></Slide>,
+			<Slide slides = {slides} speed={300} delay={6000} arrow = {true} bullet = {true} mousepause = {true} isLoop = {false} autoplay = {true}></Slide>,
 			document.getElementById('container')
 		);
