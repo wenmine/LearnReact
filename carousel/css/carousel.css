@@ -1,0 +1,127 @@
+*{margin:0;padding:0;}
+html,body{
+    width: 100%;
+    height: 100%;
+}
+.container{
+    position: relative;
+    width: 100%;
+    height: 60%;
+    overflow: hidden;
+}
+.example-enter{
+    opacity: 0.01;
+    transition: opacity 0.5s ease-in;
+}
+.example-enter.example-enter-active{
+    opacity: 1;
+}
+.example-leave{
+    opacity: 1;
+    transition: opacity 0.5s ease-in;
+}
+.example-leave.example-leave-active{
+    opacity: 0.01;
+}
+.img{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+.carousel{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.carousel1-enter {
+    left: 0;
+}
+.carousel1-enter-active {
+    left: 100%;
+    transition: left 300ms ease-in;
+}
+.carousel1-leave {
+    left: -100%;
+}
+.carousel1-leave-active {
+    left: 0;
+    transition: left 300ms ease-in;
+}
+.carousel2-enter {
+    left: 100%;
+}
+.carousel2-enter-active {
+    left: 0;
+    transition: left 300ms ease-in;
+}
+.carousel2-leave {
+    left: 0;
+}
+.carousel2-leave-active {
+    left: -100%;
+    transition: left 300ms ease-in;
+}
+.content{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.bullets{
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    height: 16px;
+    text-align: center;
+    -webkit-transition: .3s;
+    -moz-transition: .3s;
+    -o-transition: .3s;
+    transition: .3s;
+    -webkit-transform: translate3d(0,0,0);
+    -ms-transform: translate3d(0,0,0);
+    -o-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+    z-index: 10;
+
+}
+.bullets .circle{
+    margin: 0 5px;
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    border-radius: 100%;
+    background: #000;
+    opacity: .2;
+    cursor: pointer;
+}
+.bullets .active{
+    background-color: #2196F3;
+    opacity: 1;
+}
+.turnBtn{
+    position: absolute;
+    top: 45%;
+    margin-top : -15px;
+    width : 30px;
+    height: 30px;
+    border-top: 2px solid #2196F3;
+    border-left: 2px solid #2196F3;
+    cursor: pointer;
+}
+.prev{
+    left: 5%;
+    transform: rotate(-45deg);
+}
+.next{
+    right: 5%;
+    transform: rotate(135deg);
+}
+@media screen and (max-height: 768px){
+    .container{height: 30%;}
+}
+@media screen and (min-width: 1280px){
+    .container{height: 80%;}
+}
+
